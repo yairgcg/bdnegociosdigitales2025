@@ -1,0 +1,89 @@
+    1  git --version
+    2  git config --global
+    3  git config --global user.name "yair"
+    4  git config --global user.email "gabrielyair079@gmail.com"
+    5  clear
+    6  git config --global core.editor "code--wait"
+    7  git config --global core.editor "code --wait"
+    8  git config --global -e
+    9  git config core.autocrlf true
+   10  git config core.autocrlf true
+   11  git config --global core.autocrlf true
+   12  git branch
+   13  git init 
+   14  ls -l
+   15  pwd
+   16  ls 
+   17  clear
+   18  -l 
+   19  ls -l
+   20  ls -l a
+   21  ls -la
+   22  git branch
+   23  git branch master main
+   24  git config --global init.DefaultBranch main
+   25  git branch -m master main
+   26  git config --global -e
+   27  clear
+   28  git status
+   29  git add .
+   30  git status
+   31  git commit -m "Logro: Inicio de proyecto para base de datos de negocios digitales"
+   32  git status
+   33  git logs
+   34  git log
+   35  git remote add origin https://github.com/yairgcg/bdnegociosdigitales2025.git
+   36  git remote
+   37  git push -u origin main
+   38  ls -a
+   39  nano testing.txt
+   40  git status
+   41  git add testing.txt
+   42  git status
+   43  clear
+   44  git rm --cached testing.txt
+   45  git status
+   46  git add .
+   47  git commit -m "nuevo"
+   48  clear
+   49  nano ola.txt
+   50  ls 
+   51  git status
+   52  git add .
+   53  git commit -m segundo archivo
+   54  git commit -m "segundo archivo"
+   55  clear
+   56  git status
+   57  git log
+   58  nano testing.txt
+   59  git status
+   60  git add .
+   61  git status
+   62  clear
+   63  git commit -m "prueba haber q se pone aqui jeje"
+   64  clear
+   65  git status
+   66  git branch
+   67  git checkout -m -b amin
+   68  git branch 
+   69  echo "Ola" > testing.txt
+   70  ls 
+   71  echo "Amigos" > Archivo1.txt
+   72  ls
+   73  git add .
+   74  git commit "Nuevo archivos creados"
+   75  git commit -m "Nuevo archivos creados"
+   76  ls
+   77  git checkout main
+   78  git switch amin
+   79  git merge amin
+   80  git branch 
+   81  ls
+   82  ls
+   83  git status
+   84  git add .
+   85  git status
+   86  git status
+   87  git commit -m "Logro: creacion de una tabla con restricciones e inserciones"
+   88  git push
+   89  history > 10
