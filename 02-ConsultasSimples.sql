@@ -73,5 +73,40 @@ select year(OrderDate) as anoFecha, MONTH (OrderDate) mesFecha, DAY(OrderDate) a
 		year(ShippedDate) as anoRecibido, MONTH (ShippedDate) mesRecibido, DAY(ShippedDate) as diaRecibido,
 		CustomerID as 'Cliente'
 		from Orders
-		where year(OrderDate) = '1996'
-		;
+		where year(OrderDate) = '1996';
+
+
+-- Mostrar todas las oedenes de compra selecionar 
+
+	select Quantity
+	from [Order Details] where Quantity >= 40;
+
+	-- Mostrar el nombre completo del empeado , numero de empleado , 
+	-- fecha de nacimiento , cyti y fecha de contratacion 
+	-- deve ser mavor de 1993 los resutados en sus encabesados deven ser mostrados en español
+
+	select 
+	(FirstName + ' ' +
+	LastName) as 'Nombre completo',
+	EmployeeID AS 'Numero de Empleado',
+	BirthDate AS 'Fecha Nacimiento',
+	City AS 'Ciudad',
+	HireDate as 'Fecha de contratación'
+	from Employees
+	where year (HireDate) > 1993;
+
+	select 
+	Concat (FirstName, '' ,LastName) as [Nombre completo],
+	EmployeeID AS 'Numero de Empleado',
+	BirthDate AS 'Fecha Nacimiento',
+	City AS 'Ciudad',
+	HireDate as 'Fecha de contratación'
+	from Employees
+	where year (HireDate) > 1993;
+
+	-- Mostrar os emeplados que no son dirigidos por el jefe 2
+select * from Employees;
+select EmployeeID, ReportsTo 
+from Employees 
+where ReportsTo != '2' and ReportsTo is null;
+

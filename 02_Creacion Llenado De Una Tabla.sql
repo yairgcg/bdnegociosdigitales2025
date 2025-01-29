@@ -51,3 +51,6 @@ select * from categoria order by nombre desc; 	-- Checa toda la informacion de u
 
 insert into categoria
 values (10, 'Cremeria');
+
+## Diagrama Resultante
+!(Diagrama Resultante)[./images/DiagramaPrincipal]
