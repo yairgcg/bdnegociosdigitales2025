@@ -21,5 +21,16 @@ create table productos1(
     foreign key (categoriaid)
     references categoria(categoriaid)
     
-)
+);
 
+-- Diagrama principal
+insert into productos1
+values (1, 'Miguelito', 'Dulce sano para la lombriz', 34.5, 45, 5);
+
+insert into productos1
+values (1, 'Miguelito', 'Dulce sano para la lombriz', 1001, 45, 5);
+
+insert into productos1
+values (2, 'Tutsi Pop', 'Bota bota y no es pelota', 103, 42, 6);
+
+select * from productos1;
