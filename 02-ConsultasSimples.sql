@@ -1,4 +1,4 @@
- 
+
 -- Lenguaje SQL LLM (Insert, Update, Select, Delete)
 -- Consultas simples
 use Northwind;
@@ -104,73 +104,97 @@ select year(OrderDate) as anoFecha, MONTH (OrderDate) mesFecha, DAY(OrderDate) a
 	from Employees
 	where year (HireDate) > 1993;
 
-	-- Mostrar los emeplados que no son dirigidos por el jefe 2
+
+	-- Mostrar os emeplados que no son dirigidos por el jefe 2
 select * from Employees;
 select EmployeeID, ReportsTo 
 from Employees 
 where ReportsTo != '2' and ReportsTo is null;
 
--- Clausula Betwenn 
--- between valor inicial and 
--- Mostrar los productos con precio entre 10 y 50
+-- OPERADORES LOGICOS (OR, AND Y NOT)
+-- Seleccionar los productos que tengan un precio de entre 10 y 50 dolares
 
-select * from Products;
-select ProductName, UnitPrice from Products
-where UnitPrice >= 10 and UnitPrice <= 50
+select ProductName as NombreProducto, UnitPrice as PrecioProducto, UnitsInStock as ExistenciaProducto 
+from Products
+where UnitPrice >= 10 and UnitPrice <= 50;
+
+-- Mostrar todos los pedidos realizados por clientes que no son enviados a alemania
+
+select * from Orders;
+select * from Customers;
+
+select * from Orders where ShipCountry <> 'Germany';
+
+select * from Orders where not ShipCountry = 'Germany';
+
+-- Seleccionar clientes de Mexico o Estados Unidos
+
+select * from Customers
+where Country= 'Mexico' or country = 'USA';
+
+-- Seleccionar empleados que nacieron entre 1955 y 1958 y que vivan en Londre
+
+select * from Employees
+where (year (BirthDate) >= '1955' and year (BirthDate) <= '1958') and City = 'London'
 ;
 
-select ProductName as NombrePorudcto, UnitPrice as PrecioProducto from Products
-where UnitPrice between 10 and 50;
-
--- Seleccionar todos los pedidos realizados desde el primer de enero y 30 de junio de 1997
-
+-- Seleccionar los pedidos con flete de peso(Freight) mayor a $100 y enviado a Francia o España
 select * from Orders;
-select OrderID, OrderDate from Orders
-where  OrderDate between '1997-01-01' and '1997-06-30';
+select OrderID, OrderDate, ShipCountry, Freight from Orders 
+where Freight > 100 and (ShipCountry = 'France' or ShipCountry = 'Spain');
 
-select OrderID, OrderDate from Orders
-where OrderDate >= '1997-01-01' and OrderDate <= '1997-06-30';
+-- Seleccionar las top cinco ordenes de compra 
+select top 5 * from orders;
 
--- Seleccionar todos los empleados contratados entre 1990 y 1995 que trabajan en Londres
-select * from Employees;
-select LastName as Apellido, FirstName as Nombre, HireDate as AñoContratacion, City as Ciudad from Employees
-where year(HireDate) between 1992 and 1994 and City = 'London';
-
--- Pedidos con flete (Freight) entre 50 y 200 enviados a Alemania y Francia
-select * from Orders;
-select OrderID as OrdenID, Freight as Peso, ShipCountry as PaisEnvio from Orders
-where Freight between '50' and '200' and ShipCountry='Germany' or ShipCountry='France';
-
--- Seleccionar todos los productos que tengan un precio entre 5 y 20 dolares o que sean de la categoria 1, 2 o 3
+-- Seleccionar los productos que tengan un precio entre $10 y %50
 select * from Products;
-select ProductName as [Nombre Producto], UnitPrice as [Precio Producto], CategoryID as [Categoria Producto] from Products
-where UnitPrice between 5 and 20 and CategoryID in (1, 2, 3);
+select ProductName as NombreProducto, UnitPrice as PrecioProducto, Discontinued as Descontinuado, UnitsInStock as Existencia from Products
+where UnitPrice >= 10 and UnitPrice <= 50 and Discontinued !=1 and UnitsInStock > 20;
 
--- Empleados con numero de trabajador entre 3 y 7 que no trabajan en Londres y Seattle 
-select * from Employees
+-- Pedidos enviados a Francia o Alemania
+select OrderID, ShipCountry, Freight from Orders
+where (shipcountry = 'France' or ShipCountry = 'Germany');
 
-select EmployeeID as [Empleado ID], LastName as [Apellido Empleado], FirstName as [Nombre Empleado], City as [Ciudad Empleado] from Employees
-where (EmployeeID between 3 and 7) and City not in ('London', 'Seattle')
+-- Clientes que no sean de Mexico o USA y que tengan fax registrado
+select Country, City, fax from Customers
+where (country != 'Mexico' or country != 'USA') and Fax is not NULL;
 
--- Clausula Like
--- Patrones :
--- 1) % (Porcentaje) Representa 0 o mas caracteres en el patrón de búsqueda
--- 2) _ (guion bajo) Representa exactamente un caracter en el patrón de busqueda
--- 3) [] Corchetes -> Se utiliza para definir un conjuto de caracteres buscando cualquiera de ellos en la posicion especifica
--- [] -> Se utiliza para buscar caracteres que no estan dentro del conjunto especifico 
+select Country, City, fax from Customers
+where (country != 'Mexico' and country != 'USA') and Fax is not NULL;
 
---Buscar los productos que comiencen con cha
-select * from Products
-where ProductName like 'cha%' and UnitPrice = '18';
+-- Tarea
+-- Seleccionar pedidos con un flete mayor a $100, enviados a Brasil o Argentina pero no enviados por el transportista 1
+select * from Shippers;
 
--- Buscar todos los productos que terminen con E
-select * from Products
-where ProductName like '%E'
+-- Seleccionar empleados que no viven en Londres o Seattle 
+select concat(FirstName, '', LastName) as 'Nombre Completo', HireDate, Country, city
+from Employees  
+where not (city = 'London' or City = 'Seattle')
+and year(HireDate) >= 1992;
 
--- Seleccionar todos los clientes cuyo nombre de empresa contiene la palabra "co" en cualquier parte
-select CompanyName, CustomerID from Customers
-where CompanyName LIKE '%co%'
+select concat(FirstName, '', LastName) as 'Nombre Completo', HireDate, Country, city
+from Employees  
+where not city <> 'London' and City <> 'Seattle'
+and year(HireDate) >= 1992;
 
--- Seleccionar los empleados cuyo nombre comience con A y tenga exactamente 5 caracteres
-select FirstName, LastName from Employees
-where FirstName like 'A_____';
+-- Clausula IN (or)
+-- Seleccionar los productos con categoria 1, 3, 5
+
+select ProductName, CategoryID, UnitPrice from products
+where CategoryID in (1,3,5);
+
+
+-- Clausula Between
+select ProductName, CategoryID, UnitPrice from products
+where CategoryID = 1 or CategoryID = 3 or CategoryID = 5;
+
+-- Seleccionar todas las ordenes de la región RJ, Tachira, y que no tengan region
+select OrderID, OrderDate, ShipRegion from Orders;
+select ShipRegion from Orders
+where ShipRegion in ('RJ', 'Táchira', 'null') or ShipRegion is null;
+
+-- Seleccionar las ordenes que tengan cantidades de 12, 9 y 40 y descuento de 0.15 y 0.5 o 0.05
+select * from Orders;
+select * from [Order Details];
+select OrderID, Quantity, Discount from [Order Details]
+where Quantity in (12, 9, 40) and Discount in (0.15, 0.05)
