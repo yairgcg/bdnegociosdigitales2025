@@ -1,3 +1,4 @@
+
 -- Joins
 --			Syntaxis 
 --	select * from TableA
@@ -326,3 +327,10 @@ inner join [Order Details] as OD
 on O.OrderID = OD.OrderID
 group by CompanyName
 having sum(Quantity * UnitPrice)  between 500 and 2000 
+
+-- Practica de utilización del Left Join
+
+-- Seleccionar los datos que se van a utilizar para insertar en la tabla products new
+-- Product_id, ProductName, CustomerCategory, UnitPrice, Discontinued, Inserted
+
+use Northwind
