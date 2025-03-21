@@ -1,3 +1,11 @@
+# Query Ejemplo Left Join
+
+
+Consulta practicando el uso de left join 
+
+```sql
+
+-- Ejemplo de left join aplicado
 -- Ejemplo de left join aplicado
 use Northwind
 select * from ProductsNew
@@ -34,11 +42,11 @@ INSERT INTO ProductsNew (ProductID, ProductName, Customer, Category, UnitPrice, 
 SELECT 
     p.ProductID,
     p.ProductName,
-    cu.CompanyName,   -- Asegúrate de que esta columna existe en ProductsNew
-    c.CategoryName,   -- Removí el alias "c."
+    cu.CompanyName,   -- Asegï¿½rate de que esta columna existe en ProductsNew
+    c.CategoryName,   -- Removï¿½ el alias "c."
     od.UnitPrice,
     p.Discontinued,
-    GETDATE()         -- Asegúrate de que FechaRegistro existe y es DATETIME o DATE
+    GETDATE()         -- Asegï¿½rate de que FechaRegistro existe y es DATETIME o DATE
 FROM 
     Products AS p
     INNER JOIN Categories AS c ON p.CategoryID = c.CategoryID
@@ -143,7 +151,7 @@ alter table ProductsNew
 add constraint pk_products_new
 primary key (product_pk)  
 
--- Crear la tabla mediante consulta y se agrega el campo identidad después 
+-- Crear la tabla mediante consulta y se agrega el campo identidad despuï¿½s 
 
 drop table ProductsNew
 	
@@ -170,8 +178,8 @@ FROM
 	add constraint pk_products_new
 	primary key (productbk)
 
-	select 
-	
+```
 
-
+---
+**Autor:** Yair Gabriel Corona Galarza  
 

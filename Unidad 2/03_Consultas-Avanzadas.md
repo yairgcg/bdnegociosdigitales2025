@@ -1,3 +1,9 @@
+# Consultas Avanzadas
+
+
+Consultas haciendo uso de INNER JOINS con group by y having
+
+```sql
 
 -- Joins
 --			Syntaxis 
@@ -5,13 +11,13 @@
 --	inner join TableB
 --	on PrimaryKey = Foreign Key
 
--- Seleccionar todas las categorías y productos
+-- Seleccionar todas las categorï¿½as y productos
 use Northwind
 select C.CategoryID AS [Numero de Categoria], C.CategoryName as 'Nombre de Categoria', P.ProductName as 'Nombre de Producto', P.UnitsInStock as Existencia, P.UnitPrice as [Precio] from Categories as C
 inner join Products as P
 on C.CategoryID = P.CategoryID;
 
--- Seleccionar los productos de la categoría beverages y condiments donde la existencia esté entre 18 y 30
+-- Seleccionar los productos de la categorï¿½a beverages y condiments donde la existencia estï¿½ entre 18 y 30
 select CategoryName as [Nombre de categoria], P.ProductName as [Nombre de Producto] ,UnitsInStock as [Unidades en stock]  from Products as P
 inner join Categories as C
 on C.CategoryID= P.CategoryID
@@ -38,21 +44,21 @@ inner join [Order Details] as OD
 on O.OrderID = OD.OrderID
 where O.OrderDate between '1996-07-01' and '1996-10-31'
 
--- Consultas básicas por Inne Join
--- Obtener el nombre de los clientes y los países a los que enviaron sus pedidos
+-- Consultas bï¿½sicas por Inne Join
+-- Obtener el nombre de los clientes y los paï¿½ses a los que enviaron sus pedidos
 
 select O.CustomerID, O.ShipCountry from Orders as O
 inner join Customers as C
 on C.CustomerID = O.CustomerID
 order by o.ShipCountry desc
 
-select O.CustomerID as [Nombre contacto], ShipCountry as 'País' from Customers as C
+select O.CustomerID as [Nombre contacto], ShipCountry as 'Paï¿½s' from Customers as C
 inner join Orders as O
 on C.CustomerID = O.CustomerID
 order by 2 asc;
 
 -- Obtener los productos y sus respectivos proveedores
-select P.ProductName as [Nombre Producto], S.CompanyName [Nombre Compañía] from Products as P
+select P.ProductName as [Nombre Producto], S.CompanyName [Nombre Compaï¿½ï¿½a] from Products as P
 inner join Suppliers as S
 on P.SupplierID = S.SupplierID
 order by 2 asc
@@ -62,22 +68,22 @@ select OrderID as [Orden ID], CONCAT (E.Title, '  ', E.FirstName, '  ', E.LastNa
 inner join Employees as E
 on O.EmployeeID = E.EmployeeID
 
--- Listar los productos juntos con sus precios y la categoría a la que pertenecen
+-- Listar los productos juntos con sus precios y la categorï¿½a a la que pertenecen
 select ProductName as [Nombre de Producto], UnitPrice as [Unidad de precio], C.CategoryID as CategoriaID from Products as P
 inner join Categories as C
 on C.CategoryID = P.CategoryID
 
 
 -- OBTENER EL NOMBRE DEL CLIENTE, NUMERO DE ORDEN Y FECHA DE ORDEN
-select CompanyName AS [Nombre compañía], OrderID as [OrderID], OrderDate as [Fecha de Orden] from Customers as C
+select CompanyName AS [Nombre compaï¿½ï¿½a], OrderID as [OrderID], OrderDate as [Fecha de Orden] from Customers as C
 inner join Orders as O
 on C.CustomerID = O.CustomerID
 
-select CompanyName AS [Nombre compañía], OrderID as [OrderID], OrderDate as [Fecha de Orden] from Customers as C
+select CompanyName AS [Nombre compaï¿½ï¿½a], OrderID as [OrderID], OrderDate as [Fecha de Orden] from Customers as C
 inner join Orders as O
 on C.CustomerID = O.CustomerID
 
--- Listar las órdenes mostrando el número de órden, el nombre del producto y la cantidad que se vendió
+-- Listar las ï¿½rdenes mostrando el nï¿½mero de ï¿½rden, el nombre del producto y la cantidad que se vendiï¿½
 select OrderID, ProductName, Quantity as [Cantidad Vendida]  from [Order Details] as OD
 inner join Products as P
 on OD.ProductID = P.ProductID
@@ -109,7 +115,7 @@ on S.ShipperID = O.ShipVia
 
 -- Consulta de joins intermedias
 
--- Obtener la cantidad total de productos por categoría
+-- Obtener la cantidad total de productos por categorï¿½a
 select sum(Quantity) as [Cantidad total], C.CategoryName as [Nombre de Categoria] from [Order Details] as OD
 inner join Products as P
 on OD.ProductID = P.ProductID
@@ -148,11 +154,11 @@ on OD.OrderID = O.OrderID
 
 
 -- Listar los clientes y la cantidad de pedidos que han realizado
-select CompanyName as Cliente, COUNT(*) as [Numero de órdenes]  from Customers as C
+select CompanyName as Cliente, COUNT(*) as [Numero de ï¿½rdenes]  from Customers as C
 inner join Orders as O
 on  C.CustomerID = O.CustomerID
 group by CompanyName
-order by [Numero de órdenes]
+order by [Numero de ï¿½rdenes]
 
 
 -- Obtener los empleados que han gestionado pedidos enviados a Alemania
@@ -164,14 +170,14 @@ where O.ShipCountry = 'Germany'
 select * from Orders
 
 
--- Listar los productos junto con el nombre del proveedor y el país de origen
+-- Listar los productos junto con el nombre del proveedor y el paï¿½s de origen
 select ProductName as [Nombre Producto], CompanyName as [Proveedor], Country as [Pais de origen] from Products as P
 inner join Suppliers as S
 on P.SupplierID = S.SupplierID
 order by 1 
 
--- Obtener los pedidos agrupados por país de envío 
-select OrderID, ShipCountry as [País de envio], COUNT(OrderID) as [Numero de ordenes] 
+-- Obtener los pedidos agrupados por paï¿½s de envï¿½o 
+select OrderID, ShipCountry as [Paï¿½s de envio], COUNT(OrderID) as [Numero de ordenes] 
 from Orders as O
 group by o.ShipCountry
 order by 2
@@ -186,7 +192,7 @@ on ET.TerritoryID = T.TerritoryID
 group by CONCAT(FirstName, ' ', LastName) 
 
 
--- Listar las categorías y la cantidad de productos que contienen
+-- Listar las categorï¿½as y la cantidad de productos que contienen
 select C.CategoryName, P.ProductName ,count(ProductID) as [Cantidad de Productos] from Categories as C
 inner join Products as P
 on C.CategoryID = P.CategoryID
@@ -255,7 +261,7 @@ order by 1 desc
  order by [Nombre] asc, [Cliente]
 
 
- -- Listar las categorías con el total de ingresos, generados por sus productos
+ -- Listar las categorï¿½as con el total de ingresos, generados por sus productos
 select CategoryName, sum(OD.UnitPrice * OD.Quantity) as [Ingresos Totales] from Categories as C
 inner join Products as P
 on P.CategoryID = C.CategoryID
@@ -294,7 +300,7 @@ inner join [Order Details] as OD
 on O.OrderID = OD.OrderID
 where O.OrderDate between '1997-01-01' and '1997-06-30' 
 
--- Listar los productos con las categorías Beverages, Seaffod, Confections
+-- Listar los productos con las categorï¿½as Beverages, Seaffod, Confections
 select ProductName as [Nombre Producto], CategoryName as [Categoria Producto] from Products as P
 inner join Categories as C
 on P.CategoryID = C.CategoryID
@@ -328,9 +334,14 @@ on O.OrderID = OD.OrderID
 group by CompanyName
 having sum(Quantity * UnitPrice)  between 500 and 2000 
 
--- Practica de utilización del Left Join
+-- Practica de utilizaciï¿½n del Left Join
 
 -- Seleccionar los datos que se van a utilizar para insertar en la tabla products new
 -- Product_id, ProductName, CustomerCategory, UnitPrice, Discontinued, Inserted
 
 use Northwind
+```
+
+---
+**Autor:** Yair Gabriel Corona Galarza  
+
