@@ -1,4 +1,4 @@
-# Ejercicio de creación de bases de datos con SQL-LDD
+# Practica 2
 
 ```sql
 -- Creacion de la base de datos tienda1
@@ -98,30 +98,30 @@ create table cliente (
 );
 
 CREATE TABLE detalleorden (
-	ordenfk int not null, 
-	productofk int not null,
-	preciocompra money not null, 
-	cantidad int not null, 
-	constraint pk_detalleorden
-	primary key(ordenfk,productofk), 
-	constraint chk_preciocompra
-	check(preciocompra>0.0 and preciocompra<=20000), 
-	constraint chk_cantidad
-	check (cantidad>0), 
-	constraint fk_detalleorden_producto
-	foreign key(productofk)
-	references producto1(productoid)
+    ordenfk int not null, 
+    productofk int not null,
+    preciocompra money not null, 
+    cantidad int not null, 
+    constraint pk_detalleorden
+    primary key(ordenfk,productofk), 
+    constraint chk_preciocompra
+    check(preciocompra>0.0 and preciocompra<=20000), 
+    constraint chk_cantidad
+    check (cantidad>0), 
+    constraint fk_detalleorden_producto
+    foreign key(productofk)
+    references producto1(productoid)
 );
 
 CREATE TABLE ordencompra (
-	ordenid int not null identity(1,1),
-	fechacompra date not null, 
-	cliente int not null, 
-	constraint pk_ordencompra
-	primary key(ordenid), 
-	constraint fk_ordencompra_cliente
-	foreign key (cliente)
-	references cliente(clienteid)
+    ordenid int not null identity(1,1),
+    fechacompra date not null, 
+    cliente int not null, 
+    constraint pk_ordencompra
+    primary key(ordenid), 
+    constraint fk_ordencompra_cliente
+    foreign key (cliente)
+    references cliente(clienteid)
 );
 
 ALTER TABLE detalleorden
@@ -129,7 +129,3 @@ add constraint fk_detalleorden_ordencompra
 foreign key (ordenfk)
 references ordencompra(ordenid);
 ```
-
-## Diagrama Resultante
-
-![Texto alternativo](./images/Diagrama%20Principal.png)
