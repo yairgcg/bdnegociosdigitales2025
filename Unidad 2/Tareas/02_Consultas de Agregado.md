@@ -1,3 +1,5 @@
+# Consultas de agregado
+```sql
 -- Consultas de Agregado
 -- NOTA: SOLO DEVUELVEN UN SOLO REGISTRO
 -- SUM, AVG, COUNT, COUNT(*), MAX, MIN
@@ -13,7 +15,7 @@ select COUNT(*) from Orders;
 select COUNT(ShipRegion) from Orders;
 
 select * from Products;
--- Seleciona el precio más bajo de los productos
+-- Seleciona el precio mï¿½s bajo de los productos
 select * from Products;
 select MIN(UnitPrice), MAX(UnitPrice) as 'Precio minimo', AVG(UnitsInStock) as 'Unidades Stock' from Products;
 
@@ -29,7 +31,7 @@ select sum(UnitPrice * Quantity  - (UnitPrice * Quantity * Discount)) as 'Total 
 select * from Products;
 select sum(UnitsInStock) as 'Total Stock' from Products;
 
--- Seleccionar el total de dinero que se ganó en el último trimestre de 1996
+-- Seleccionar el total de dinero que se ganï¿½ en el ï¿½ltimo trimestre de 1996
 select * from [Order Details];
 select sum(UnitPrice * Quantity  Discount) as 'Total Vendido' from [Order Details];
 select sum(UnitPrice * Quantity  - (UnitPrice * Quantity * Discount)) as 'Total Vendido' from [Order Details]
@@ -93,12 +95,15 @@ group by CategoryID
 having COUNT(*) > 10
 order by CategoryID asc
 
--- Listar las ordenes agrupadas por empleado, pero que solo muestren aquellos que hayan gestionado más de 10 pedidos
+-- Listar las ordenes agrupadas por empleado, pero que solo muestren aquellos que hayan gestionado mï¿½s de 10 pedidos
 select * from Orders;
 select EmployeeID, count(ShipVia) as 'Ordenes' from Orders
 group by EmployeeID
 having count(ShipVia) > 10
 order by 'Ordenes' asc;
 
+```
 
+---
+**Autor:** Yair Gabriel Corona Galarza  
 
