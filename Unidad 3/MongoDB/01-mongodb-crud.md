@@ -1,4 +1,3 @@
-Claro, Yair 😊 Aquí tienes tu documentación corregida, mejorada y con estilo Markdown para que luzca mucho más ordenada y profesional:
 
 ---
 
@@ -11,15 +10,11 @@ Claro, Yair 😊 Aquí tienes tu documentación corregida, mejorada y con estilo
 ```js
 use basededatos
 ```
- ## 📂 Mostrar bases de datos existentes
+
+## 📂 Mostrar bases de datos existentes
+
 ```js
 show dbs
-```
-
-
-```js
-use bd1
-db.createCollection('Empleado')
 ```
 
 ---
@@ -33,7 +28,7 @@ db.createCollection('Empleado')
 
 ---
 
-## 📋 Mostrar colecciones
+## 📋 Mostrar colecciones dentro de una base de datos
 
 ```js
 show collections
@@ -41,7 +36,7 @@ show collections
 
 ---
 
-## 📝 Inserción de un documento
+## 📝 Insertar un documento
 
 ```js
 db.Empleado.insertOne({
@@ -54,7 +49,7 @@ db.Empleado.insertOne({
 
 ---
 
-## 🧩 Documento más complejo con arrays
+## 🧩 Insertar un documento con arrays
 
 ```js
 db.Empleado.insertOne({
@@ -64,7 +59,7 @@ db.Empleado.insertOne({
 })
 ```
 
-> ⚠️ **Nota:** No puedes repetir dos veces el mismo campo (`apellido`). Solo se conserva uno.
+> ⚠️ **Nota:** No puedes repetir campos con el mismo nombre dentro de un mismo documento. Si lo haces, solo se conservará el último.
 
 ---
 
@@ -74,7 +69,7 @@ db.Empleado.insertOne({
 db.nombreColeccion.drop()
 ```
 
-Ejemplo:
+### Ejemplo:
 
 ```js
 db.ejemplo.drop()
@@ -82,7 +77,7 @@ db.ejemplo.drop()
 
 ---
 
-## 🧠 Documento con estructuras anidadas y arrays
+## 🧠 Insertar documento con estructuras anidadas y arrays
 
 ```js
 db.alumno.insertOne({
@@ -106,7 +101,7 @@ db.alumno.insertOne({
 
 ---
 
-## 🆔 Insertar documento con ID manual
+## 🆔 Insertar documento con ID personalizado
 
 ```js
 db.alumno.insertOne({
@@ -162,7 +157,7 @@ db.alumno.insertMany([
 ])
 ```
 
-> 💡 **Cuando lleva llaves `{}` es un documento.**
+> 💡 **Dato:** Todo lo que esté entre `{}` se considera un documento.  
 
 ---
 
@@ -179,7 +174,7 @@ db.libros.find({})
 ### 2. Buscar por editorial
 
 ```js
-db.libros.find({ Editorial: 'biblio' })
+db.libros.find({ editorial: 'biblio' })
 ```
 
 ### 3. Buscar por precio
@@ -200,37 +195,39 @@ db.libros.find({ titulo: 'JSON para todos' })
 
 🔗 [Referencia oficial de operadores](https://www.mongodb.com/docs/manual/reference/operator/query/)
 
-### 1. Precio mayor a 25
+### Ejemplos:
+
+- Precio mayor a 25
 
 ```js
 db.libros.find({ precio: { $gt: 25 } })
 ```
 
-### 2. Precio igual a 25
+- Precio igual a 25
 
 ```js
 db.libros.find({ precio: { $eq: 25 } })
 ```
 
-### 3. Cantidad menor a 5
+- Cantidad menor a 5
 
 ```js
 db.libros.find({ cantidad: { $lt: 5 } })
 ```
 
-### 4. Editorial sea *biblio* o *planeta*
+- Editorial sea *biblio* o *planeta*
 
 ```js
-db.libros.find({ Editorial: { $in: ['biblio', 'planeta'] } })
+db.libros.find({ editorial: { $in: ['biblio', 'planeta'] } })
 ```
 
-### 5. Precio sea 20 o 25
+- Precio sea 20 o 25
 
 ```js
 db.libros.find({ precio: { $in: [20, 25] } })
 ```
 
-### 6. Precio distinto a 20 o 25
+- Precio distinto a 20 o 25
 
 ```js
 db.libros.find({ precio: { $nin: [20, 25] } })
@@ -242,9 +239,7 @@ db.libros.find({ precio: { $nin: [20, 25] } })
 
 🔗 [Referencia oficial de operadores lógicos](https://www.mongodb.com/docs/manual/reference/operator/query-logical/)
 
-### Ejemplo con `$or`
-
-> Mostrar libros con precio mayor a 25 **o** cantidad menor a 15
+### `$or`: Libros con precio mayor a 25 **o** cantidad menor a 15
 
 ```js
 db.libros.find({
@@ -255,9 +250,7 @@ db.libros.find({
 })
 ```
 
-### Ejemplo con `$and` y `$or` combinados
-
-> Mostrar libros de editorial *Biblio* con precio mayor a 40 **o** libros de *Planeta* con precio mayor a 30
+### `$and` + `$or`: Combinación de condiciones
 
 ```js
 db.libros.find({
@@ -282,9 +275,9 @@ db.libros.find({
 
 ## 🔍 Proyección (mostrar solo ciertos campos)
 
-> Sintaxis: `db.coleccion.find(filtro, campos)`
+> Sintaxis: `db.coleccion.find(filtro, camposAMostrar)`
 
-### Mostrar solo el título (sin el `_id`)
+### Mostrar solo el título (sin `_id`):
 
 ```js
 db.libros.find({}, {
@@ -293,7 +286,7 @@ db.libros.find({}, {
 })
 ```
 
-### Otro ejemplo:
+### Otro ejemplo con más campos:
 
 ```js
 db.getCollection('libros').find(
@@ -301,128 +294,141 @@ db.getCollection('libros').find(
   { _id: 0, titulo: 1, editorial: 1, precio: 1 }
 )
 ```
+---
+
+# 📦 **Consultas avanzadas, actualizaciones y borrado en MongoDB**
 
 ---
 
 ## 📦 Operador `$exists`
 
-> Verifica si un campo existe o no en los documentos
+> Verifica si un campo **existe** o **no existe** en los documentos.
+
+### Buscar documentos donde el campo `cantidad` **existe**:
 
 ```js
 db.libros.find({
-  nombreCampo: { $exists: true }
+  cantidad: { $exists: true }
 })
 ```
 
----
+### Buscar documentos donde el campo `cantidad` **no existe**:
 
--- Buscar todos los documentos que no tengan cantidad
 ```js
 db.libros.find({
   cantidad: { $exists: false }
 })
 ```
 
-## Operador Type 
-Permite solicitar a MongoDB si un campo corresponde a un tipo
-[Operador Type](https://www.mongodb.com/docs/manual/reference/operator/query/type/)
+---
 
+## 🔍 Operador `$type`
 
-db.libros.find({
-  precio:{$type:16}
-})
+> Permite buscar documentos en función del tipo de dato de un campo.
 
--- Mostrar todos los documentos donde el precio sea de tipo doble o entero o cualquier otro tpo de dato
+🔗 [Referencia oficial del operador `$type`](https://www.mongodb.com/docs/manual/reference/operator/query/type/)
+
+### Buscar documentos donde `precio` sea de tipo entero (16):
+
 ```js
 db.libros.find({
-  precio: {$type: 16 }
+  precio: { $type: 16 }
 })
-
-db.libros.insertMany({
-  _id: 12,
-  titulo: 'IA',
-  editorial: 'Terra',
-  precio: 125,
-  cantidad: 20
-},
-{
-  _id: 13,
-  titulo: 'Python para todos',
-  editorial: 2001,
-  precio: 200,
-  cantidad: 30
-}
-)
-
 ```
--- Insertar los documentos de libros donde los valores de la editorial sean strings 
+
+### Insertar documentos con diferentes tipos:
+
 ```js
-db.libros.find({
-  editorial: {$type:2}
-})
-
-db.libros.find({
-  editorial: {$type:16}
-})
-```
-
-## Modificando documentos
-### Comandos importantes
-1. UpdateOne -> Modifica un solo documento
-1. UpdateManu -> Modificar multiples documentos
-1. ReplaceOne .> Sustituir el contenido completo de un documento
-
-Tiene el siguiente formato
-```json
-db.collection.updateOne(
-{
-  filtro
-},
-{
-  operador:
-}
-)
-```
-[Operadores Update](https://www.mongodb.com/docs/manual/reference/operator/update/)
-**Operador Set**
-1. Modificar un documento
-```json
-  db.libros.updateOne({
-    titulo: 'Python para todos'
+db.libros.insertMany([
+  {
+    _id: 12,
+    titulo: 'IA',
+    editorial: 'Terra',
+    precio: 125,
+    cantidad: 20
   },
   {
-    $set: {titulo: 'Java para todos'}
-  })
+    _id: 13,
+    titulo: 'Python para todos',
+    editorial: 2001, // tipo número
+    precio: 200,
+    cantidad: 30
+  }
+])
 ```
 
-- Modificar el documento de ID 10, estableciendo el precio y la cantidad en 50
+### Buscar documentos donde `editorial` sea de tipo **string**:
 
 ```js
 db.libros.find({
-  editorial: {$type:2}
+  editorial: { $type: 2 }
 })
+```
 
+### Buscar documentos donde `editorial` sea de tipo **entero**:
+
+```js
 db.libros.find({
-  editorial: {$type:16}
+  editorial: { $type: 16 }
 })
 ```
 
--- Mutiplicar todos los libros donde la cantidad sea mator a 20, multiplicar la cantidad por 2. Me ayudas con este ejercicio? Mi BD se llama 
-```json
-  db.libros.updateOne({
-    titulo: 'Python para todos'
-  },
-  {
-    $set: {titulo: 'Java para todos'}
-  })
+---
+
+## 🛠️ Modificar documentos
+
+### Comandos principales
+
+1. `updateOne()` – Modifica un solo documento.  
+2. `updateMany()` – Modifica múltiples documentos.  
+3. `replaceOne()` – Reemplaza completamente un documento.
+
+🔗 [Operadores de actualización](https://www.mongodb.com/docs/manual/reference/operator/update/)
+
+---
+
+### ✅ Usando `$set` para actualizar campos
+
+Modificar un campo específico:
+
+```js
+db.libros.updateOne(
+  { titulo: 'Python para todos' },
+  { $set: { titulo: 'Java para todos' } }
+)
 ```
--- Actualizar todos los libros multiplicando por 2 la cantidad, el precio de todos aquellos libros donde el precio sea mayor a 20
 
-## Reemplazar Documento (replaceOne)
--- Actualizar todo el documento del id 2 por el titulo De la Tierra a la Luna, autor Julio Berte, editorial Tierra, precio 100
+Modificar el documento con `_id: 10`, estableciendo `precio` y `cantidad` en 50:
 
+```js
+db.libros.updateOne(
+  { _id: 10 },
+  { $set: { precio: 50, cantidad: 50 } }
+)
+```
+
+---
+
+### 🔢 Multiplicar valores con `$mul`
+
+Multiplicar por 2 el precio y cantidad de todos los libros donde el precio sea mayor a 20:
+
+```js
+db.libros.updateMany(
+  { precio: { $gt: 20 } },
+  { $mul: { precio: 2, cantidad: 2 } }
+)
+```
+
+---
+
+## 🔁 Reemplazar documento (`replaceOne`)
+
+Reemplazar completamente el documento con `_id: 2`:
+
+```js
 db.libros.replaceOne(
-  { _id: 2 }, 
+  { _id: 2 },
   {
     _id: 2,
     titulo: 'De la Tierra a la Luna',
@@ -431,93 +437,126 @@ db.libros.replaceOne(
     precio: 100
   }
 )
-
-
-## Borrar documentos
-1. deleOne -> Elimina un solo documento
-2. deleteMany -> Elimina multiples documentos
-
--- Eliminar el documento con el ID 2
-deleteOne
-
-```json
-  db.libros.deleteOne(
-  {
-    cantidad:($gt:150)
-  })
-```
--- Eliminar todos los libros donde la cantidad es mayor a 150
-
-```json
-db.libros.deleteMany(
-  {
-    
-  }
-  )
-```
-## Expresiones Regulares
--- Seleccionar todos los libros que contengan una t minúscula
-```json
-db.libros.find({(Titulo:t)})
-```
--- Seleccionar todos los libros que en el título contenga la palabra json
-```json
-db.libros.find({
-  (Titulo:json)})
 ```
 
+---
 
--- Seleccionar todos los documentos que en el título terminen con tos
-```json
-db.libros.find({
-  (Titulo:/tos/)})
+## 🗑️ Eliminar documentos
+
+### 1. Eliminar un solo documento (`deleteOne`)
+
+Eliminar el documento con `_id: 2`:
+
+```js
+db.libros.deleteOne({ _id: 2 })
 ```
 
--- Seleccionar todos los libros que en el titulo comiencen con j
-```json
-db.libros.find({
-  (Titulo:/tos/)})
-```
+### 2. Eliminar varios documentos (`deleteMany`)
 
-## Expresiones $regex
-[Operador Regex](https://www.mongodb.com/docs/manual/reference/operator/query/regex/)
-```json
+Eliminar todos los documentos donde la `cantidad` sea mayor a 150:
 
-```
-## Operador Reggex
-
--- Seleccionar todos los titulos que contengan la palabra json
-```json
-db.libros.find({
-  titulo: { $regex: /^j/i }
-})
-```
--- Seleccionar todos los documentos de libros donde el titulo comience con j y no distinga entre mayúsculas y minúsculas
-```json
-db.libros.find({
-  titulo: { $regex: /es^/i }
+```js
+db.libros.deleteMany({
+  cantidad: { $gt: 150 }
 })
 ```
 
+---
 
--- Seleccionar todos los documentos de libros donde el titulo termine con es y no distinga entre mayúsculas y minúsculas
+## 🔎 Expresiones Regulares (`$regex`)
 
-## Método sort (Ordenar documentos)
--- Ordenar los libros de manera ascendente por el precio
-```json
+🔗 [Referencia oficial de `$regex`](https://www.mongodb.com/docs/manual/reference/operator/query/regex/)
+
+### Buscar títulos que contengan una "t" minúscula:
+
+```js
+db.libros.find({
+  titulo: /t/
+})
+```
+
+### Buscar títulos que contengan la palabra "json" (sin importar mayúsculas):
+
+```js
+db.libros.find({
+  titulo: { $regex: /json/i }
+})
+```
+
+### Buscar títulos que terminen con "tos":
+
+```js
+db.libros.find({
+  titulo: /tos$/
+})
+```
+
+### Buscar títulos que comiencen con "j":
+
+```js
+db.libros.find({
+  titulo: /^j/i
+})
+```
+
+---
+
+## 🔃 Ordenar documentos (`sort()`)
+
+### Ordenar por precio ascendente:
+
+```js
 db.libros.find(
   {},
   { _id: 0, titulo: 1, precio: 1 }
 ).sort({ precio: 1 })
 ```
--- Ordenar los libros de manera descendente por el precio
-```json
+
+### Ordenar por precio descendente:
+
+```js
 db.libros.find(
   {},
   { _id: 0, titulo: 1, precio: 1 }
 ).sort({ precio: -1 })
-
 ```
-## Otros métodos (skip, limit, size)
 
-# Borrar colecciones 
+### Ordenar por editorial (ascendente) y precio (descendente):
+
+```js
+db.libros.find(
+  {},
+  { _id: 0, titulo: 1, editorial: 1, precio: 1 }
+).sort({ editorial: 1, precio: -1 })
+```
+
+---
+
+## 🧮 Otros métodos útiles
+
+### `limit()` – Limitar la cantidad de resultados
+
+Mostrar solo los **2 primeros** libros:
+
+```js
+db.libros.find({}).limit(2)
+```
+
+### `skip()` – Omitir documentos
+
+Omitir los **2 primeros** documentos y mostrar el resto:
+
+```js
+db.libros.find({}).skip(2)
+```
+
+---
+
+## 🧨 Eliminar una colección
+
+```js
+db.libros.drop()
+db.productos.drop()
+```
+
+---
